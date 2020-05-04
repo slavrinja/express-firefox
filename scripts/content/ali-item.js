@@ -2,7 +2,7 @@
 // Init Sentry Error Handler
 SMAR7.sentry.install();
 
-chrome.runtime.onConnect.addListener(function (port) {
+browser.runtime.onConnect.addListener(function (port) {
     port.onMessage.addListener(function (msg) {
         switch (msg.action) {
             // ----------------- UI V1 ------------------//
@@ -320,7 +320,7 @@ chrome.runtime.onConnect.addListener(function (port) {
                             });
                         });
                     });
-                    
+
                     return data;
                 }
 
@@ -381,17 +381,17 @@ chrome.runtime.onConnect.addListener(function (port) {
                 SMAR7.notification("Filling the shipping address in", "list");
 
                 var cartIds = SMAR7.ali.parseCartIds();
-                
+
 				if (! cartIds) {
 					cartIds = SMAR7.ali.parseCartIdsFromUrl();
-				}                
-                
+				}
+
                 var url = SMAR7.ali.endpoint.ordersAPI + "?itemIds=" + cartIds + "&aeOrderFrom=main_shopcart";
 
                 window.fetch(url).then(function (e) {
                     return e.json()
                 }).then(async function (rs) {
-	                
+
 	                if (! rs.success) {
 		                SMAR7.notification("Error occurred trying to fill shipping address <br>Error code: 205", "error");
 		                return;
@@ -404,7 +404,7 @@ chrome.runtime.onConnect.addListener(function (port) {
                     if (address.status === 'error') {
                         // SMAR7.notification("Trying to add address via profile Aliexpress dashboard", "warning");
                         //window.location.href = SMAR7.ali.endpoint.manageAddress;
-                        chrome.runtime.sendMessage({ action: 'v2_formError' }, function (response) {
+                        browser.runtime.sendMessage({ action: 'v2_formError' }, function (response) {
                             window.location.reload();
                         });
 
@@ -412,7 +412,7 @@ chrome.runtime.onConnect.addListener(function (port) {
                     }
 
                     await SMAR7.ali.saveShippingMethod(rs, address.id, msg.order.shippingMethodId);
-                    chrome.runtime.sendMessage({ action: 'v2_formFilled' }, function (rs) {
+                    browser.runtime.sendMessage({ action: 'v2_formFilled' }, function (rs) {
                         window.location.reload();
                     });
                 });
@@ -424,11 +424,11 @@ chrome.runtime.onConnect.addListener(function (port) {
 
 // Messages from settings popup.
 // SMAR7.ali.routeMessage defined in /content/commons.js
-chrome.runtime.onMessage.addListener(SMAR7.ali.routeMessage);
+browser.runtime.onMessage.addListener(SMAR7.ali.routeMessage);
 
 function setProcessingMessage(text) {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/settings.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/settings.png");
     return noty({
         text: "\
             <div class='status-title'>\
@@ -482,7 +482,7 @@ $(function () {
 
             // Try to do import from NEW UI page
             const supplierLink = `https://ru.aliexpress.com/item/${productId}.html`;
-            chrome.runtime.sendMessage(undefined, {
+            browser.runtime.sendMessage(undefined, {
                 action: "getItemData",
                 url: supplierLink
             }, undefined, function (rs) {
@@ -509,8 +509,8 @@ function setFailMessage(text) {
     if (undefined === text) {
         var text = "Error occurred! Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>";
     }
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var errorURL = chrome.extension.getURL("images/cancel.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var errorURL = browser.extension.getURL("images/cancel.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -537,8 +537,8 @@ function setWarningMessage(text) {
     if (undefined === text) {
         var text = "Error occurred! Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>";
     }
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var errorURL = chrome.extension.getURL("images/warning.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var errorURL = browser.extension.getURL("images/warning.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -565,8 +565,8 @@ function setWarningMessage(text) {
  * Deprecated: Use SMAR7.notification instead
  */
 function setSuccessMessage(text) {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var tickURL = chrome.extension.getURL("images/checked.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var tickURL = browser.extension.getURL("images/checked.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -589,8 +589,8 @@ function setSuccessMessage(text) {
  * Deprecated: Use SMAR7.notification instead
  */
 function setLoadingMessage() {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/sm7_gear.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/sm7_gear.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -613,7 +613,7 @@ function setLoadingMessage() {
 }
 
 function addImportButton() {
-    const iconLink = chrome.extension.getURL("images/down-arrow.png");
+    const iconLink = browser.extension.getURL("images/down-arrow.png");
 
     let $container = $('.product-action-main').length ? $('.product-action-main') : $('.product-action');
 

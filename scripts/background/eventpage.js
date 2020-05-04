@@ -5,48 +5,57 @@ var shopifyAppUrl;
 // Init Sentry Error Handler
 SMAR7.sentry.install();
 
-chrome.management.getSelf(function (ext) {
+browser.management.getSelf(function (ext) {
     host = SMAR7.utils.domainUrl(ext.installType);
 });
 
-// When the extension is installed or upgraded ...
-chrome.runtime.onInstalled.addListener(function () {
-    // Replace all rules ...
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-        // With a new rule ...
-        chrome.declarativeContent.onPageChanged.addRules([
-            {
-                // That fires when a page's aliexpress search
-                conditions: [
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { hostSuffix: ".aliexpress.com" }
-                    }),
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { urlMatches: "https?:\/\/(www.)?aliexpress.com\/(af|wholesale|w|category|store|item)\/.*" }
-                    }),
-                    // TODO: make it with ergexp as well
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: {
-                            hostEquals: "shoppingcart.aliexpress.com",
-                            pathPrefix: "/shopcart"
-                        }
-                    }),
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { hostEquals: "shoppingcart.aliexpress.com", pathPrefix: "/order" }
-                    }),
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { hostEquals: "trade.aliexpress.com", pathPrefix: "/orderList" }
-                    }),
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: { hostSuffix: ".myshopify.com" }
-                    })
-                ],
-                // And shows the extension's page action.
-                actions: [new chrome.declarativeContent.ShowPageAction()]
-            }
-        ]);
-    });
+browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if(changeInfo !== undefined && tab !== undefined) {
+        if (changeInfo.status === 'complete' && tab.url.indexOf("aliexpress.") !== -1) {
+            browser.browserAction.enable(tabId);
+        } else if (changeInfo.status === 'complete') {
+            browser.browserAction.disable(tabId);
+        }
+    }
 });
+// // When the extension is installed or upgraded ...
+// browser.runtime.onInstalled.addListener(function () {
+//     // Replace all rules ...
+//     browser.declarativeContent.onPageChanged.removeRules(undefined, function () {
+//         // With a new rule ...
+//         browser.declarativeContent.onPageChanged.addRules([
+//             {
+//                 // That fires when a page's aliexpress search
+//                 conditions: [
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: { hostSuffix: ".aliexpress.com" }
+//                     }),
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: { urlMatches: "https?:\/\/(www.)?aliexpress.com\/(af|wholesale|w|category|store|item)\/.*" }
+//                     }),
+//                     // TODO: make it with ergexp as well
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: {
+//                             hostEquals: "shoppingcart.aliexpress.com",
+//                             pathPrefix: "/shopcart"
+//                         }
+//                     }),
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: { hostEquals: "shoppingcart.aliexpress.com", pathPrefix: "/order" }
+//                     }),
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: { hostEquals: "trade.aliexpress.com", pathPrefix: "/orderList" }
+//                     }),
+//                     new browser.declarativeContent.PageStateMatcher({
+//                         pageUrl: { hostSuffix: ".myshopify.com" }
+//                     })
+//                 ],
+//                 // And shows the extension's page action.
+//                 actions: [new browser.declarativeContent.ShowPageAction()]
+//             }
+//         ]);
+//     });
+// });
 
 /**
  * Products that have to be ordered on supplier's site
@@ -87,7 +96,7 @@ var self = this;
 /**
  * Listener for catching moment when the tab's address is updated.
  */
-chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
+browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
 
     /*
      * Check whether the updated tab is the one we're working on and
@@ -95,7 +104,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
      */
     if (tabId == workingTab && info.status == "complete") {
         // Open a channel with a tab
-        var port = chrome.tabs.connect(tab.id, { name: "ordering" });
+        var port = browser.tabs.connect(tab.id, { name: "ordering" });
 
         // Add a listener to the messages sent from a tab
         port.onMessage.addListener(function (msg) {
@@ -115,13 +124,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
                          * be processed by tabs.onUpdated listener
                          */
                         // TODO: Store URL in a variable maybe? Sort of a pattern?
-                        chrome.tabs.update(workingTab, { url: "https://www.aliexpress.com/item/" + products[currentProduct].external_id + ".html" });
+                        browser.tabs.update(workingTab, { url: "https://www.aliexpress.com/item/" + products[currentProduct].external_id + ".html" });
                     } else {
                         // Seems like there's no other products to add into a cart
                         currentProduct = 0;
                         // Move to shopping cart page
                         // TODO: put the URL in a variable
-                        chrome.tabs.update(workingTab, { url: "https://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm" });
+                        browser.tabs.update(workingTab, { url: "https://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm" });
                     }
                     break;
                 /*
@@ -145,9 +154,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
                     }
                     break;
                 case "fulfillOrder":
-                    chrome.tabs.remove(cartTab);
+                    browser.tabs.remove(cartTab);
                     var url = "https://www.aliexpress.com/item/" + products[0].external_id + ".html";
-                    chrome.tabs.create({ "url": url, "active": true }, function (tab) {
+                    browser.tabs.create({ "url": url, "active": true }, function (tab) {
                         workingTab = tab.id;
                     });
                     break;
@@ -217,7 +226,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
                 SMAR7.afActive = false;
 
                 var url = "https://www.aliexpress.com/item//" + products[0].external_id + ".html";
-                chrome.tabs.update({ "url": url, "active": true }, function (tab) {
+                browser.tabs.update({ "url": url, "active": true }, function (tab) {
                     workingTab = tab.id;
                 });
             }
@@ -228,7 +237,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
 /**
  * A listener to messages from outside of the extension
  */
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         var responseStatus = { bCalled: false };
 
@@ -287,7 +296,7 @@ chrome.runtime.onMessage.addListener(
             case "resetCart":
                 try {
                     let url = "https://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm";
-                    chrome.tabs.create({"url": url, "active": true}, function (tab) {
+                    browser.tabs.create({ "url": url, "active": true }, function (tab) {
                         cartTab = tab.id;
                         workingTab = tab.id;
                         currentProduct = 0;
@@ -299,7 +308,7 @@ chrome.runtime.onMessage.addListener(
                             'formError': false
                         });
                     });
-                } catch(e) {
+                } catch (e) {
                     SMAR7.sentry.reportError(e, { method: 'resetCart' });
                 }
                 break;

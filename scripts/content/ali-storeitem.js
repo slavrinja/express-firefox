@@ -1,4 +1,4 @@
-chrome.runtime.onConnect.addListener(function (port) {
+browser.runtime.onConnect.addListener(function (port) {
     port.onMessage.addListener(function (msg) {
         switch (msg.action) {
             case "orderItem":
@@ -160,8 +160,8 @@ chrome.runtime.onConnect.addListener(function (port) {
  * Deprecated: Use SMAR7.notification instead
  */
 function setProcessingMessage(text) {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/settings.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/settings.png");
     return noty({
         text: "\
             <div class='status-title'>\
@@ -213,7 +213,7 @@ $(function () {
 
             // Try to do import from NEW UI page
             const supplierLink = `https://ru.aliexpress.com/item/${productId}.html`;
-            chrome.runtime.sendMessage(undefined, {
+            browser.runtime.sendMessage(undefined, {
                 action: "getItemData",
                 url: supplierLink
             }, undefined, function (rs) {
@@ -241,8 +241,8 @@ function setFailMessage(text) {
     if (undefined === text) {
         var text = "Error occured! Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>";
     }
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var errorURL = chrome.extension.getURL("images/cancel.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var errorURL = browser.extension.getURL("images/cancel.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -265,8 +265,8 @@ function setFailMessage(text) {
  * Deprecated: Use SMAR7.notification instead
  */
 function setSuccessMessage() {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var tickURL = chrome.extension.getURL("images/checked.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var tickURL = browser.extension.getURL("images/checked.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -289,8 +289,8 @@ function setSuccessMessage() {
  * Deprecated: Use SMAR7.notification instead
  */
 function setLoadingMessage() {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/loading.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/loading.png");
     return noty({
         text: "\
             <div class='status-header'>\
@@ -309,7 +309,7 @@ function setLoadingMessage() {
 }
 
 function addImportButton() {
-    var iconLink = chrome.extension.getURL("images/down-arrow.png");
+    var iconLink = browser.extension.getURL("images/down-arrow.png");
 
     $(".product-action-main").append("\
         <div class='smar7-express-button'>\

@@ -1,7 +1,7 @@
 $(function () {
     addImportButton();
     SMAR7.loadFonts();
-    
+
     $(".list-item").hover(function() {
         $(this).find("img.picCore").addClass("greyed-out");
         $(this).find(".smar7-express").show();
@@ -9,7 +9,7 @@ $(function () {
         $(this).find("img.picCore").removeClass("greyed-out");
         $(this).find(".smar7-express").hide();
     });
-    
+
     $(".smar7-express").on("click", async function (event) {
         var domain =  await SMAR7.utils.getStoreDomain();
         if (!domain) {
@@ -44,8 +44,8 @@ $(function () {
 
             // TODO: into the function
             if ($(content).find("#j-image-thumb-list img").length > 0) {
-                var images = $(content).find("#j-image-thumb-list img").map(function () { 
-                    var str = $(this).attr("src"); return {"src": str.substr(0, str.length - 10)} 
+                var images = $(content).find("#j-image-thumb-list img").map(function () {
+                    var str = $(this).attr("src"); return {"src": str.substr(0, str.length - 10)}
                 }).get()
             } else {
                 // There's gotta be only one image
@@ -56,37 +56,37 @@ $(function () {
             var itemData = {
                 "id": productId,
                 "supplier":"aliexpress",
-                "title": 
+                "title":
                     $(content).find(".product-name").html(),
                 // All possibe options
-                "options": 
-                    $(content).find("#j-product-info-sku .p-property-item .p-item-title").map(function() { 
-                        var str = $(this).html(); 
-                        return {"name": str.substr(0, str.length - 1)} 
+                "options":
+                    $(content).find("#j-product-info-sku .p-property-item .p-item-title").map(function() {
+                        var str = $(this).html();
+                        return {"name": str.substr(0, str.length - 1)}
                     }).get(),
                 // All variants. Titles getting stripped fomr html tags
-                "optionValues": 
+                "optionValues":
                     $(content).find(".sku-attr-list a").map(function() {
                         var title = ($(this).attr("title") === undefined) ? $(this).text() : $(this).attr("title");
-                        return {"sku": $(this).data("sku-id"), "title": title} 
-                    }).get(),  
+                        return {"sku": $(this).data("sku-id"), "title": title}
+                    }).get(),
                 // Prices for every variant
-                "prices": prices, 
+                "prices": prices,
                 "images": images,
                 "variant_images":
                     $(content).find(".sku-attr-list img").map(function() {
                         return {"src": $(this).attr("bigpic")};
                     }).get(),
             };
-            
+
             var timestamp = $.now();
             var descriptionUrl = protocol+"://www.aliexpress.com/getDescModuleAjax.htm?productId=" + productId + "&t=" + timestamp;
-            
+
             // Set description
             $.get(descriptionUrl, function(result) {
                 var matches = result.match(/productDescription='(.*)'/);
                 itemData.body_html = matches[1];
-                
+
                 SMAR7.importItem(itemData);
             }).fail(function(jqXHR, textStatus) {
                 SMAR7.notification("Something went wrong! <br>Error code: 002-" + jqXHR.status, "error");
@@ -102,8 +102,8 @@ $(function () {
  * Set a button for exporting to Shopify
  */
 function addImportButton() {
-    var iconLink = chrome.extension.getURL("images/down-arrow.png");
-    
+    var iconLink = browser.extension.getURL("images/down-arrow.png");
+
     $(".list-item .img").prepend("\
         <div class='smar7-express'>\
             <img src='"+iconLink+"'>\
@@ -114,8 +114,8 @@ function addImportButton() {
  * Deprecated: Use SMAR7.notification instead
  */
 function setSuccessMessage() {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var tickURL = chrome.extension.getURL("images/checked.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var tickURL = browser.extension.getURL("images/checked.png");
     return noty({
         text:"\
             <div class='status-title'>\
@@ -136,8 +136,8 @@ function setSuccessMessage() {
  * Deprecated: Use SMAR7.notification instead
  */
 function setLoadingMessage() {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/loading.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/loading.png");
     return noty({
         text:"\
             <div class='status-title'>\
@@ -157,11 +157,11 @@ function setLoadingMessage() {
  * Deprecated: Use SMAR7.notification instead
  */
 function setFailMessage(text) {
-    if (undefined === text) { 
+    if (undefined === text) {
         var text = "Error occured! Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>";
     }
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var errorURL = chrome.extension.getURL("images/cancel.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var errorURL = browser.extension.getURL("images/cancel.png");
     return noty({
         text:"\
             <div class='status-title'>\

@@ -8,7 +8,7 @@
         "48": "images/package64.png",
         "128": "images/package128.png"
     },
-    "page_action": {
+    "browser_action": {
         "default_icon": {
             "16": "images/package16.png",
             "48": "images/package64.png",
@@ -29,14 +29,24 @@
         "*://*.aliexpress.com/*"
     ],
     "background": {
-        "scripts": ["scripts/jquery-1.12.4-min.js", "scripts/sentry.bundle.min.js", "scripts/background/functions.js", "scripts/background/eventpage.js"],
+        "scripts": [
+            "scripts/jquery-3.4.1.min.js",
+            "scripts/sentry.bundle.min.js",
+            "scripts/background/functions.js",
+            "scripts/background/eventpage.js"
+        ],
         "persistent": true
     },
     "content_scripts": [
         {
-            "matches": ["*://*.aliexpress.com/af*", "*://*.aliexpress.com/wholesale*", "*://*.aliexpress.com/w/wholesale*", "*://*.aliexpress.com/category/*"],
+            "matches": [
+                "*://*.aliexpress.com/af*",
+                "*://*.aliexpress.com/wholesale*",
+                "*://*.aliexpress.com/w/wholesale*",
+                "*://*.aliexpress.com/category/*"
+            ],
             "js": [
-                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery-3.4.1.min.js",
                 "scripts/jquery.noty.packaged.min.js",
                 "scripts/background/functions.js",
                 "scripts/content/common.js",
@@ -48,9 +58,13 @@
             ]
         },
         {
-            "matches": ["*://*.aliexpress.com/item*", "*://shoppingcart.aliexpress.com/*", "*://ilogisticsaddress.aliexpress.com/addressList.*"],
+            "matches": [
+                "*://*.aliexpress.com/item*",
+                "*://shoppingcart.aliexpress.com/*",
+                "*://ilogisticsaddress.aliexpress.com/addressList.*"
+            ],
             "js": [
-                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery-3.4.1.min.js",
                 "scripts/jquery.noty.packaged.min.js",
                 "scripts/sentry.bundle.min.js",
                 "scripts/lodash.min.js",
@@ -64,9 +78,11 @@
             ]
         },
         {
-            "matches": ["*://*.aliexpress.com/store/product/*"],
+            "matches": [
+                "*://*.aliexpress.com/store/product/*"
+            ],
             "js": [
-                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery-3.4.1.min.js",
                 "scripts/jquery.noty.packaged.min.js",
                 "scripts/background/functions.js",
                 "scripts/content/common.js",
@@ -78,9 +94,11 @@
             ]
         },
         {
-            "matches": ["*://trade.aliexpress.com/*"],
+            "matches": [
+                "*://trade.aliexpress.com/*"
+            ],
             "js": [
-                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery-3.4.1.min.js",
                 "scripts/jquery.noty.packaged.min.js",
                 "scripts/content/common.js",
                 "scripts/content/ali-orderlist.js"
@@ -91,8 +109,15 @@
             ]
         },
         {
-            "matches": ["*://express.smar7apps.com/*"],
-            "js": ["scripts/jquery-1.12.4-min.js", "scripts/background/functions.js", "scripts/content/common.js", "scripts/content/dropshipping.js"],
+            "matches": [
+                "*://express.smar7apps.com/*"
+            ],
+            "js": [
+                "scripts/jquery-3.4.1.min.js",
+                "scripts/background/functions.js",
+                "scripts/content/common.js",
+                "scripts/content/dropshipping.js"
+            ],
             "all_frames": true
         }
     ]

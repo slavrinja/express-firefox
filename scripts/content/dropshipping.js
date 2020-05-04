@@ -48,7 +48,7 @@ $(function () {
                 }
             }
 
-            chrome.runtime.sendMessage({ action: "resetCart", data: response }, function (rs) {
+            browser.runtime.sendMessage({ action: "resetCart", data: response }, function (rs) {
             });
         }).fail(function () {
             alert(msg);
@@ -62,7 +62,7 @@ $(function () {
 
         /* TODO: USE attr() instead of data() because for some reason
             jQuery doesn't see data-attributes values reloaded by Vue */
-        chrome.runtime.sendMessage({
+        browser.runtime.sendMessage({
             action: "getOrderShippingData",
             internalOrderId: $(button).attr("data-orderid")
         }, function (response) {
@@ -136,7 +136,7 @@ $(function () {
             ));
         }
 
-        chrome.runtime.sendMessage(undefined, {
+        browser.runtime.sendMessage(undefined, {
             action: "getItemData",
             url: supplierLink
         }, undefined, function (rs) {
@@ -213,7 +213,7 @@ $(function () {
         }
 
         try {
-            chrome.runtime.sendMessage(undefined, {
+            browser.runtime.sendMessage(undefined, {
                 action: "getItemData",
                 url: supplierLink,
                 id: externalId

@@ -1,20 +1,20 @@
 /* Smar7Apps Namespace */
-/* globals chrome */
+/* globals browser */
 
 var SMAR7 = SMAR7 || {};
 
 SMAR7.noty = null;
 SMAR7.images = {
-    logo: chrome.extension.getURL("images/package16.png"),
-    logom: chrome.extension.getURL("images/package64.png"),
-    logob: chrome.extension.getURL("images/package128.png"),
-    loading: chrome.extension.getURL("images/settings.png"),
-    success: chrome.extension.getURL("images/sm7_success.png"),
-    warning: chrome.extension.getURL("images/sm7_warning.png"),
-    error: chrome.extension.getURL("images/sm7_error.png"),
-    gear: chrome.extension.getURL("images/sm7_gear.png"),
-    cart: chrome.extension.getURL("images/sm7_cart.png"),
-    list: chrome.extension.getURL("images/sm7_list.png"),
+    logo: browser.extension.getURL("images/package16.png"),
+    logom: browser.extension.getURL("images/package64.png"),
+    logob: browser.extension.getURL("images/package128.png"),
+    loading: browser.extension.getURL("images/settings.png"),
+    success: browser.extension.getURL("images/sm7_success.png"),
+    warning: browser.extension.getURL("images/sm7_warning.png"),
+    error: browser.extension.getURL("images/sm7_error.png"),
+    gear: browser.extension.getURL("images/sm7_gear.png"),
+    cart: browser.extension.getURL("images/sm7_cart.png"),
+    list: browser.extension.getURL("images/sm7_list.png"),
 };
 SMAR7.callback = null;
 
@@ -47,7 +47,7 @@ $.fn.dropDownOptionContaining = function (text) {
 
 /* Common functions */
 SMAR7.loadFonts = function () {
-    var fontUrl = chrome.extension.getURL("fonts/Roboto-Light.ttf");
+    var fontUrl = browser.extension.getURL("fonts/Roboto-Light.ttf");
 
     var style = document.createElement('style');
     var style_str = "@font-face {";
@@ -57,7 +57,7 @@ SMAR7.loadFonts = function () {
     style.innerHTML = style_str;
     document.documentElement.appendChild(style);
 
-    var fontUrl = chrome.extension.getURL("fonts/Roboto-Black.ttf");
+    var fontUrl = browser.extension.getURL("fonts/Roboto-Black.ttf");
 
     var style = document.createElement('style');
     var style_str = "@font-face {";
@@ -67,7 +67,7 @@ SMAR7.loadFonts = function () {
     style.innerHTML = style_str;
     document.documentElement.appendChild(style);
 
-    var fontUrl = chrome.extension.getURL("fonts");
+    var fontUrl = browser.extension.getURL("fonts");
     var style = document.createElement('style');
     var style_str = "@font-face {";
     style_str = style_str + "font-family: \"smart\";";
@@ -175,7 +175,7 @@ SMAR7.ucfirst = function (string) {
 };
 
 SMAR7.importItem = function (itemData) {
-    chrome.runtime.sendMessage(undefined, {
+    browser.runtime.sendMessage(undefined, {
         action: "exportParticularItem",
         itemData
     }, undefined, function (response) {
@@ -193,8 +193,8 @@ SMAR7.importItem = function (itemData) {
                 SMAR7.notification("Error occurred. Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>", "error");
             }
         } else {
-            if (chrome.runtime.lastError) {
-                SMAR7.notification("Error occurred: " + chrome.runtime.lastError.message, "error");
+            if (browser.runtime.lastError) {
+                SMAR7.notification("Error occurred: " + browser.runtime.lastError.message, "error");
             } else {
                 SMAR7.notification("Error occurred during product importing. Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>", "error");
             }

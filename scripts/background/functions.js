@@ -174,11 +174,11 @@ var SMAR7 = {
 
             return null;
         },
-        
+
         parseCartIdsFromUrl: function() {
 			const urlParams = new URLSearchParams(window.location.search);
             const shopCartIds = urlParams.get('availableProductShopcartIds');
-            
+
             return shopCartIds;
         },
 
@@ -481,7 +481,7 @@ var SMAR7 = {
             var id = 'smar7-express';
 
             return new Promise(function(resolve) {
-                chrome.management.getSelf(function (ext) {
+                browser.management.getSelf(function (ext) {
                     if (ext.installType === "development") {
                         // Each dev has to change this id according to its environment
                         id = 'express-7'; // huberom
@@ -495,8 +495,8 @@ var SMAR7 = {
         // Gets attached stores' domains
         getDomains: function() {
             return new Promise(function (resolve, reject) {
-                chrome.storage.local.get(["domains"], function(result) {
-                    var error = chrome.runtime.lastError;
+                browser.storage.local.get(["domains"], function(result) {
+                    var error = browser.runtime.lastError;
                     if (error) {
                         resolve([]);
                     }
@@ -570,7 +570,7 @@ var SMAR7 = {
                     newDomains.push({'name': domain, 'active': true});
                 }
 
-                chrome.storage.local.set({domains: newDomains}, () => {
+                browser.storage.local.set({domains: newDomains}, () => {
                     console.log('saved', newDomains);
                     resolve(true);
                 });
@@ -594,7 +594,7 @@ var SMAR7 = {
                     }
                 }
 
-                chrome.storage.local.set({domains: domains}, () => {
+                browser.storage.local.set({domains: domains}, () => {
                     console.log('saved', domains);
                     resolve(true);
                 });

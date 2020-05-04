@@ -2,8 +2,8 @@
  * Deprecated: Use SMAR7.notification instead
  */
 function setProcessingMessage(text) {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var loadingURL = chrome.extension.getURL("images/settings.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var loadingURL = browser.extension.getURL("images/settings.png");
     return noty({
         text:"\
             <div class='status-title'>\
@@ -37,10 +37,10 @@ $(function () {
         // Get order number
         var orderNo = $(this).siblings(".button-logisticsTracking").attr("orderid");
 
-        chrome.runtime.sendMessage(undefined, {"action": "getOrderData", "orderNo": orderNo}, undefined, function (response) {
+        browser.runtime.sendMessage(undefined, {"action": "getOrderData", "orderNo": orderNo}, undefined, function (response) {
             noty.close();
-            if (chrome.runtime.lastError) {
-                SMAR7.notification("We were unable to download tracking codes" + chrome.runtime.lastError.message, "error");
+            if (browser.runtime.lastError) {
+                SMAR7.notification("We were unable to download tracking codes" + browser.runtime.lastError.message, "error");
             } else if (typeof response == 'undefined') {
                 SMAR7.notification("Something went wrong during order data retrieving", "error");
             } else {
@@ -82,8 +82,8 @@ function setFailMessage(text) {
     if (undefined === text) {
         var text = "Error occured! Please contact us at <a href='https://smar7apps.com/support' target='_blank'>smar7apps.com</a>";
     }
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var errorURL = chrome.extension.getURL("images/cancel.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var errorURL = browser.extension.getURL("images/cancel.png");
     return noty({
         text:"\
             <div class='status-title'>\
@@ -105,8 +105,8 @@ function setFailMessage(text) {
  * Deprecated: Use SMAR7.notification instead
  */
 function setSuccessMessage(text) {
-    var logoURL = chrome.extension.getURL("images/package16.png");
-    var tickURL = chrome.extension.getURL("images/checked.png");
+    var logoURL = browser.extension.getURL("images/package16.png");
+    var tickURL = browser.extension.getURL("images/checked.png");
     return noty({
         text:"\
             <div class='status-title'>\
@@ -125,7 +125,7 @@ function setSuccessMessage(text) {
 }
 
 function addDetailsButton() {
-    var iconLink = chrome.extension.getURL("images/order.png");
+    var iconLink = browser.extension.getURL("images/order.png");
 
     $(".button-logisticsTracking").closest(".order-action").prepend("\
         <button class='ui-button ui-button-normal smar7-express-button smar7-smaller'>\

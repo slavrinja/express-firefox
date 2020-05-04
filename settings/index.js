@@ -35,7 +35,7 @@ SMAR7.utils.getDomains().then(function(domains) {
         $('.ext-connected').hide();
         $('.stores-links-container').hide();
 
-        chrome.tabs.query({'url': "*://*.myshopify.com/*"}, async function (tabs) {
+        browser.tabs.query({'url': "*://*.myshopify.com/*"}, async function (tabs) {
             var stores = [];
             var appID = await SMAR7.utils.shopifyAppId();
 
@@ -48,7 +48,7 @@ SMAR7.utils.getDomains().then(function(domains) {
                         'url' : url
                     });
                 }
-                // Filter duplicated stores. When same store opened in multiple tabs 
+                // Filter duplicated stores. When same store opened in multiple tabs
                 stores = utils.getUnique(stores, 'hostname');
             }
 
@@ -69,8 +69,8 @@ SMAR7.utils.getDomains().then(function(domains) {
 
 var utils = {
     clearStorage: function() {
-        chrome.storage.local.clear(function() {
-            var error = chrome.runtime.lastError;
+        browser.storage.local.clear(function() {
+            var error = browser.runtime.lastError;
             if (error) {
                 console.error(error);
             }
