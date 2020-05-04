@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/smar7-express.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="edit-form">
+                <div class="status-header">
+                    <div class="sm7-title">SMART</div>
+                    <div class="sm7-subtitle">Express</div>
+                </div>
+
+                <div class="ext-connected">
+                    <div class="icon-container">
+                        <img src="../images/sm7_success.png" width="42">
+                    </div>
+                    <label for="shop" class="action-label">Extension is connected to</label>
+                    <input class="form-control form-control-sm" id="current-domain" placeholder="store.myshopify.com" readonly>
+
+                    <select class="form-control form-control-sm" id="domain-list">
+                    </select>
+                    <div class="alert alert-success">
+                        If you want to <strong>connect</strong> to a different store you can do it by opening SMART Express app dashboard inside Shopify and look for <strong>Connect Extension</strong> button
+                    </div>
+                </div>
+                <div class="ext-not-connected">
+                    <div class="icon-container">
+                        <img src="../images/sm7_warning.png" width="42">
+                    </div>
+                    <div class="alert alert-danger">
+                        Extension is <strong>not connected</strong> to your store just yet. <br><br>Go to <strong class="gree-text">SMART Express </strong>app dashboard inside Shopify and look for <strong>Connect Extension</strong> button.
+
+                        <div class="stores-links-container">
+                            Go to express app now: <br>
+                            <div class="stores-links"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../scripts/jquery-1.12.4-min.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+        <script src="../scripts/background/functions.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

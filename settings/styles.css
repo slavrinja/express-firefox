@@ -1,0 +1,81 @@
+@font-face {
+    font-family: RobotoRegular;
+    src: url(../fonts/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: RobotoBlack;
+    src: url(../fonts/Roboto-Black.ttf);
+}
+
+label {
+    font-size: 12px;
+}
+
+.container {
+    width: 280px;
+    min-height: 100px;
+    padding: 8px 18px;
+    font-size: 12px;
+}
+
+.ext-not-connected {
+    display: none;
+}
+.ext-connected {
+    /*margin-top: 14px;*/
+}
+.action-label {
+    display: block;
+    text-align: center;
+}
+
+.green-background {
+    background-color: #38d2b6 !important;
+}
+.gree-text {
+    color: rgb(56, 210, 182) !important;
+}
+
+#current-domain {
+    margin-bottom: 14px;
+    border: none;
+}
+#domain-list{
+    margin-bottom: 16px;
+}
+
+.alert-success {
+    background-color: #38d2b6;
+    color: #fff;
+    font-size: 13px;
+    border: none;
+}
+.alert-danger {
+    background-color: #f3f3f3;
+    font-size: 13px;
+    color: #6c757d;
+    border: none;
+}
+
+.stores-links-container {
+    padding: 0 2px;
+    display: none;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #6c757d;
+}
+.stores-links a {
+    line-height: 1;
+    display: block;
+    padding: 2px 0;
+    color: #11a58a;
+    margin-top: 4px;
+}
+.stores-links a + a {
+    margin-top: 0px;
+}
+.icon-container {
+    text-align: center;
+    margin: 20px 0px 28px;
+}

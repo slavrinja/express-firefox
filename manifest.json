@@ -1,0 +1,99 @@
+{
+    "manifest_version": 2,
+    "name": "SMART Express",
+    "version": "2.0.15",
+    "description": "SMART Express Chrome Extension",
+    "icons": {
+        "16": "images/package16.png",
+        "48": "images/package64.png",
+        "128": "images/package128.png"
+    },
+    "page_action": {
+        "default_icon": {
+            "16": "images/package16.png",
+            "48": "images/package64.png",
+            "128": "images/package128.png"
+        },
+        "default_title": "SMART Express",
+        "default_popup": "settings/index.html"
+    },
+    "web_accessible_resources": [
+        "images/*.png",
+        "fonts/*.ttf"
+    ],
+    "permissions": [
+        "tabs",
+        "storage",
+        "declarativeContent",
+        "*://*.smar7apps.com/",
+        "*://*.aliexpress.com/*"
+    ],
+    "background": {
+        "scripts": ["scripts/jquery-1.12.4-min.js", "scripts/sentry.bundle.min.js", "scripts/background/functions.js", "scripts/background/eventpage.js"],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.aliexpress.com/af*", "*://*.aliexpress.com/wholesale*", "*://*.aliexpress.com/w/wholesale*", "*://*.aliexpress.com/category/*"],
+            "js": [
+                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery.noty.packaged.min.js",
+                "scripts/background/functions.js",
+                "scripts/content/common.js",
+                "scripts/content/ali-search.js"
+            ],
+            "css": [
+                "css/smar7-express-button-ali.css",
+                "css/smar7-express.css"
+            ]
+        },
+        {
+            "matches": ["*://*.aliexpress.com/item*", "*://shoppingcart.aliexpress.com/*", "*://ilogisticsaddress.aliexpress.com/addressList.*"],
+            "js": [
+                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery.noty.packaged.min.js",
+                "scripts/sentry.bundle.min.js",
+                "scripts/lodash.min.js",
+                "scripts/background/functions.js",
+                "scripts/content/common.js",
+                "scripts/content/ali-item.js"
+            ],
+            "css": [
+                "css/smar7-express-button-ali.css",
+                "css/smar7-express.css"
+            ]
+        },
+        {
+            "matches": ["*://*.aliexpress.com/store/product/*"],
+            "js": [
+                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery.noty.packaged.min.js",
+                "scripts/background/functions.js",
+                "scripts/content/common.js",
+                "scripts/content/ali-storeitem.js"
+            ],
+            "css": [
+                "css/smar7-express-button-ali.css",
+                "css/smar7-express.css"
+            ]
+        },
+        {
+            "matches": ["*://trade.aliexpress.com/*"],
+            "js": [
+                "scripts/jquery-1.12.4-min.js",
+                "scripts/jquery.noty.packaged.min.js",
+                "scripts/content/common.js",
+                "scripts/content/ali-orderlist.js"
+            ],
+            "css": [
+                "css/smar7-express-button-ali.css",
+                "css/smar7-express.css"
+            ]
+        },
+        {
+            "matches": ["*://express.smar7apps.com/*"],
+            "js": ["scripts/jquery-1.12.4-min.js", "scripts/background/functions.js", "scripts/content/common.js", "scripts/content/dropshipping.js"],
+            "all_frames": true
+        }
+    ]
+}

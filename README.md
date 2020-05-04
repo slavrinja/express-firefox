@@ -1,1 +1,1 @@
-# express-firefox
+# Firefox extension for Express app

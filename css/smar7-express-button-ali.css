@@ -1,0 +1,12 @@
+.smar7-express-button {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 200px;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.smar7-express-button.new-ui {
+    margin-top: 10px;
+}
